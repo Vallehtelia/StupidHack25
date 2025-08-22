@@ -13,6 +13,7 @@ const ShrekChallenge = ({ onSuccess, completedChallenges, totalChallenges }) => 
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [challengeComplete, setChallengeComplete] = useState(false);
+  const [conversationHistory, setConversationHistory] = useState([]);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -57,8 +58,15 @@ const ShrekChallenge = ({ onSuccess, completedChallenges, totalChallenges }) => 
         
         setMessages(prev => [...prev, shrekMessage]);
         
-        // Check if challenge is complete (Shrek is convinced)
-        if (response.challenge_complete) {
+        // Update conversation history for next interaction
+        setConversationHistory(prev => [
+          ...prev,
+          { role: 'user', content: userMessage },
+          { role: 'assistant', content: response.response }
+        ]);
+        
+        // Check if challenge is complete (Shrek approves entrance)
+        if (response.approved) {
           setChallengeComplete(true);
           setTimeout(() => {
             onSuccess();
@@ -87,33 +95,72 @@ const ShrekChallenge = ({ onSuccess, completedChallenges, totalChallenges }) => 
   };
 
   const callPythonScript = async (userInput) => {
-    // This will be replaced with actual Python script call
-    // For now, simulate the response
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Simulate different responses based on user input
-        // In the future, this will call the actual Python script
-        console.log('User input:', userInput);
-        
-        const responses = [
-          "Hmm, that's interesting... but I'm still not convinced.",
-          "You're getting warmer, but my swamp is very precious to me.",
-          "That's a good point, but what about the rent?",
-          "You know what? You seem like a decent person. Maybe...",
-          "Alright, alright! You've convinced me. Welcome to my swamp! 🐸"
-        ];
-        
-        const randomIndex = Math.floor(Math.random() * responses.length);
-        const response = responses[randomIndex];
-        const isComplete = randomIndex === responses.length - 1;
-        
-        resolve({
-          success: true,
-          response: response,
-          challenge_complete: isComplete
-        });
-      }, 1000);
-    });
+    try {
+      // Call the Python script with user input and conversation history
+      const response = await fetch('/api/shrek', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          message: userInput,
+          conversationHistory: conversationHistory
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error calling Python script:', error);
+      // Fallback to simulated response if API fails
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('User input:', userInput);
+          
+          const responses = [
+            {
+              response: "Hmm, what are you doing in my swamp? You better have a good reason!",
+              approved: false,
+              reason: "Need to hear more about their intentions"
+            },
+            {
+              response: "That's interesting... but I'm still not convinced. My swamp is very precious to me.",
+              approved: false,
+              reason: "Still suspicious of their motives"
+            },
+            {
+              response: "You're getting warmer, but what about the rent? And don't cause any trouble!",
+              approved: false,
+              reason: "Getting closer but needs more convincing"
+            },
+            {
+              response: "You know what? You seem like a decent person. Maybe I can make an exception...",
+              approved: false,
+              reason: "Almost convinced but not quite there"
+            },
+            {
+              response: "Alright, alright! You've convinced me. Welcome to my swamp! 🐸",
+              approved: true,
+              reason: "User has shown good character and respect"
+            }
+          ];
+          
+          const randomIndex = Math.floor(Math.random() * responses.length);
+          const response = responses[randomIndex];
+          
+          resolve({
+            success: true,
+            response: response.response,
+            approved: response.approved,
+            reason: response.reason
+          });
+        }, 1000);
+      });
+    }
   };
 
   const handleKeyPress = (e) => {
