@@ -1,0 +1,297 @@
+.nokia-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.nokia-modal {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.nokia-phone-container {
+  position: relative;
+  display: inline-block;
+}
+
+.nokia-phone {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  width: auto;
+  height: auto;
+}
+
+.nokia-screen {
+  position: absolute;
+  /* Position based on 540x1250 image dimensions */
+  top: 27.4%; /* 280px / 1250px = 22.4% */
+  left: 16%; /* 70px / 540px = 13% */
+  width: 69.3%; /* 320px / 540px = 59.3% */
+  height: 21%; /* 225px / 1250px = 18% */
+  background: #aee0a5;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  color: #333;
+}
+
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 8px;
+}
+
+.score {
+  font-weight: bold;
+}
+
+.battery {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.battery-bar {
+  width: 25px;
+  height: 6px;
+  background: #ccc;
+  border: 1px solid #333;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.battery-level {
+  height: 100%;
+  background: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+.game-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #aee0a5;
+  border: 1px solid #8bc34a;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.game-canvas {
+  border: 1px solid #8bc34a;
+  background: #aee0a5;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.game-status {
+  text-align: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  margin-top: auto;
+}
+
+.game-status p {
+  margin: 4px 0;
+  font-size: 8px;
+}
+
+.game-status.won {
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+}
+
+.game-status.battery-dead {
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+}
+
+.battery-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.nokia-button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 18px;
+  min-width: 50px;
+}
+
+.nokia-button:hover {
+  background: #555;
+}
+
+/* Control buttons - Made visible for testing */
+.control-button {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 0, 0, 0.3); /* Red background for testing */
+  border: 2px solid red;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-height: 50px;
+  min-width: 50px;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  /* Remove fixed positioning - will be set dynamically in JSX */
+}
+
+.control-button:hover {
+  background: rgba(255, 0, 0, 0.5);
+  color: white;
+  transform: scale(1.1);
+}
+
+.control-button:active {
+  background: rgba(255, 0, 0, 0.7);
+  color: white;
+  transform: scale(0.95);
+}
+
+.close-button {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 30px;
+  height: 30px;
+  background: rgba(244, 67, 54, 0.9);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-height: 30px;
+  min-width: 30px;
+}
+
+.close-button:hover {
+  background: rgba(244, 67, 54, 1);
+  transform: scale(1.1);
+}
+
+/* SMS Distraction Overlay */
+.sms-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.sms-content {
+  background: #333;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  border: 2px solid #666;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .nokia-modal {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .nokia-screen {
+    font-size: 8px;
+    padding: 6px;
+  }
+  
+  .control-button {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    min-height: 40px;
+    min-width: 40px;
+  }
+  
+  .game-status p {
+    font-size: 7px;
+  }
+  
+  .nokia-button {
+    font-size: 6px;
+    padding: 3px 6px;
+    min-height: 16px;
+    min-width: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nokia-screen {
+    font-size: 7px;
+    padding: 5px;
+  }
+  
+  .control-button {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    min-height: 35px;
+    min-width: 35px;
+  }
+  
+  .screen-header {
+    font-size: 7px;
+  }
+  
+  .battery-bar {
+    width: 20px;
+    height: 5px;
+  }
+}

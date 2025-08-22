@@ -1,0 +1,60 @@
+.success-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  font-family: 'Press Start 2P', monospace;
+}
+
+.success-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.success-content h1 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.success-content p {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.success-message {
+  color: #4CAF50;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-block;
+  background: #2196F3;
+  color: white;
+  text-decoration: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  min-height: 50px;
+  min-width: 120px;
+  line-height: 20px;
+}
+
+.back-button:hover {
+  background: #1976D2;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

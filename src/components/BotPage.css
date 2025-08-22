@@ -1,0 +1,63 @@
+.bot-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  font-family: 'Press Start 2P', monospace;
+}
+
+.bot-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+}
+
+.bot-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.bot-content h1 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.bot-content p {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.bot-message {
+  color: #f44336;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.retry-button {
+  display: inline-block;
+  background: #FF9800;
+  color: white;
+  text-decoration: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  min-height: 50px;
+  min-width: 120px;
+  line-height: 20px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.retry-button:hover {
+  background: #F57C00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
