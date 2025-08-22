@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-Shrek Challenge AI Script
-Calls OpenAI API to act as Shrek and determine if users should enter the swamp
-"""
 
 import os
 import sys
@@ -10,10 +6,8 @@ import json
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Get OpenAI API key
 api_key = os.getenv("OPENAI_API_KEY")
 
 if not api_key:
@@ -23,13 +17,10 @@ if not api_key:
     }))
     sys.exit(1)
 
-# Initialize OpenAI client
 client = OpenAI(api_key=api_key)
 
 def get_shrek_response(user_input, conversation_history):
-    """Get Shrek's response using OpenAI API"""
     
-    # Read Shrek instructions
     try:
         with open("prompts/ShrekInstructions.txt", "r") as f:
             shrek_instructions = f.read()
@@ -40,7 +31,6 @@ def get_shrek_response(user_input, conversation_history):
         }))
         sys.exit(1)
     
-    # Create the prompt with conversation history
     if conversation_history:
         history_text = "\n".join([
             f"{'OLD CONVERSATION' if msg['role'] == 'user' else 'SHRek RESPONSE'}: {msg['content']}"
@@ -65,14 +55,11 @@ Respond as Shrek in the exact JSON format specified above.
 """
     
     try:
-        # Build input array with conversation history
         input_messages = [{"role": "system", "content": shrek_instructions}]
         
-        # Add conversation history
         for msg in conversation_history:
             input_messages.append({"role": msg['role'], "content": msg['content']})
         
-        # Add current user input
         input_messages.append({"role": "user", "content": user_input})
         
         response = client.responses.create(
@@ -91,12 +78,9 @@ Respond as Shrek in the exact JSON format specified above.
             store=True
         )
         
-        # Extract the response
         shrek_response = response.output_text.strip()
         
-        # Try to parse JSON from the response
         try:
-            # Look for JSON in the response
             if "{" in shrek_response and "}" in shrek_response:
                 start = shrek_response.find("{")
                 end = shrek_response.rfind("}") + 1
@@ -110,7 +94,6 @@ Respond as Shrek in the exact JSON format specified above.
                     "reason": parsed_response.get("reason", "No reason given")
                 }
             else:
-                # Fallback if no JSON found
                 return {
                     "success": True,
                     "response": shrek_response,
@@ -119,7 +102,6 @@ Respond as Shrek in the exact JSON format specified above.
                 }
                 
         except json.JSONDecodeError:
-            # Fallback if JSON parsing fails
             return {
                 "success": True,
                 "response": shrek_response,
@@ -134,9 +116,7 @@ Respond as Shrek in the exact JSON format specified above.
         }
 
 def main():
-    """Main function to handle command line input"""
     
-    # Get user input and conversation history from command line arguments
     if len(sys.argv) < 2:
         print(json.dumps({
             "success": False,
@@ -147,7 +127,6 @@ def main():
     user_input = sys.argv[1]
     conversation_history = []
     
-    # Parse conversation history if provided
     if len(sys.argv) >= 3:
         try:
             conversation_history = json.loads(sys.argv[2])
@@ -158,13 +137,10 @@ def main():
             }))
             sys.exit(1)
     
-    # Get Shrek's response
     result = get_shrek_response(user_input, conversation_history)
     
-    # Output JSON result
     print(json.dumps(result, indent=2))
     
-    # Exit with appropriate code
     sys.exit(0 if result["success"] else 1)
 
 if __name__ == "__main__":
