@@ -15,21 +15,20 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
   const batteryTimerRef = useRef(null);
   const smsTimerRef = useRef(null);
   const directionRef = useRef({ x: -1, y: 0 });
-  const appleRef = useRef({ x: 13, y: 13 });
+  const appleRef = useRef({ x: 7, y: 7 });
   const phoneImageRef = useRef(null);
   
   const ringtoneRef = useRef(new Audio(ringtoneAudio));
   const handleWinRef = useRef();
   
-  const GRID_SIZE = 14;
-  const CELL_SIZE = 12;
+  const GRID_SIZE = 8;
   const GAME_SPEED = 200;
-  const TARGET_SCORE = 10;
+  const TARGET_SCORE = 2;
   
   // Game state
-  const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
+  const [snake, setSnake] = useState([{ x: 2, y: 2 }]);
   const [direction, setDirection] = useState({ x: -1, y: 0 });
-  const [apple, setApple] = useState({ x: 13, y: 13 });
+  const [apple, setApple] = useState({ x: 7, y: 7 });
   const [lastMoveTime, setLastMoveTime] = useState(0);
   
   // Calculate responsive positions based on phone image dimensions
@@ -82,9 +81,9 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     setGameState('playing');
     setScore(0);
     setBattery(40);
-    setSnake([{ x: 10, y: 10 }]);
+    setSnake([{ x: 2, y: 2 }]);
     setDirection({ x: 1, y: 0 });
-    setApple({ x: 13, y: 13 });
+    setApple({ x: 7, y: 7 });
     setLastMoveTime(0);
     
     return () => {
@@ -148,7 +147,7 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     setBattery(100);
     setSnake([{ x: 10, y: 10 }]);
     setDirection({ x: 1, y: 0 });
-    setApple({ x: 13, y: 13 });
+    setApple({ x: 7, y: 7 });
     setLastMoveTime(0);
     
     // Clear any existing interval
@@ -309,10 +308,9 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     const screenRect = screenElement.getBoundingClientRect();
     const canvasSize = Math.min(screenRect.width - 16, screenRect.height - 16); // Account for padding
     
-    // Ensure canvas fits within the screen
-    const maxGridSize = Math.floor(canvasSize / CELL_SIZE);
-    const actualGridSize = Math.min(GRID_SIZE, maxGridSize);
-    const actualCellSize = canvasSize / actualGridSize;
+    // Always maintain 14x14 grid, scale cell size to fit canvas
+    // Ensure minimum cell size to prevent drawing issues
+    const cellSize = Math.max(canvasSize / GRID_SIZE, 8);
     
     canvas.width = canvasSize;
     canvas.height = canvasSize;
@@ -326,15 +324,15 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     // Draw grid lines
     ctx.strokeStyle = '#8bc34a';
     ctx.lineWidth = 0.5;
-    for (let i = 0; i <= actualGridSize; i++) {
+    for (let i = 0; i <= GRID_SIZE; i++) {
       ctx.beginPath();
-      ctx.moveTo(i * actualCellSize, 0);
-      ctx.lineTo(i * actualCellSize, canvasSize);
+      ctx.moveTo(i * cellSize, 0);
+      ctx.lineTo(i * cellSize, canvasSize);
       ctx.stroke();
       
       ctx.beginPath();
-      ctx.moveTo(0, i * actualCellSize);
-      ctx.lineTo(canvasSize, i * actualCellSize);
+      ctx.moveTo(0, i * cellSize);
+      ctx.lineTo(canvasSize, i * cellSize);
       ctx.stroke();
     }
     
@@ -348,10 +346,10 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
         ctx.fillStyle = '#2e7d32';
       }
       ctx.fillRect(
-        segment.x * actualCellSize + 1,
-        segment.y * actualCellSize + 1,
-        actualCellSize - 2,
-        actualCellSize - 2
+        segment.x * cellSize + 1,
+        segment.y * cellSize + 1,
+        Math.max(cellSize - 2, 1), // Ensure width is always positive
+        Math.max(cellSize - 2, 1)  // Ensure height is always positive
       );
     });
     
@@ -359,9 +357,9 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     ctx.fillStyle = '#f44336';
     ctx.beginPath();
     ctx.arc(
-      appleRef.current.x * actualCellSize + actualCellSize / 2,
-      appleRef.current.y * actualCellSize + actualCellSize / 2,
-      actualCellSize / 2 - 2,
+      appleRef.current.x * cellSize + cellSize / 2,
+      appleRef.current.y * cellSize + cellSize / 2,
+      Math.max(cellSize / 2 - 2, 1), // Ensure radius is always positive
       0,
       2 * Math.PI
     );
@@ -443,8 +441,8 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
             onClick={() => handleDirectionChange({ x: 0, y: -1 })}
             aria-label="Move Up"
             style={{
-              left: getResponsivePosition(234, 730).x,
-              top: getResponsivePosition(234, 730).y
+              left: getResponsivePosition(270, 860).x,
+              top: getResponsivePosition(270, 860).y
             }}
           >
             ↑
@@ -454,8 +452,8 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
             onClick={() => handleDirectionChange({ x: 0, y: 1 })}
             aria-label="Move Down"
             style={{
-              left: getResponsivePosition(234, 880).x,
-              top: getResponsivePosition(234, 880).y
+              left: getResponsivePosition(270, 1040).x,
+              top: getResponsivePosition(270, 1040).y
             }}
           >
             ↓
@@ -465,8 +463,8 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
             onClick={() => handleDirectionChange({ x: -1, y: 0 })}
             aria-label="Move Left"
             style={{
-              left: getResponsivePosition(105, 785).x,
-              top: getResponsivePosition(105, 785).y
+              left: getResponsivePosition(120, 930).x,
+              top: getResponsivePosition(120, 930).y
             }}
           >
             ←
@@ -476,8 +474,8 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
             onClick={() => handleDirectionChange({ x: 1, y: 0 })}
             aria-label="Move Right"
             style={{
-              left: getResponsivePosition(360, 785).x,
-              top: getResponsivePosition(360, 785).y
+              left: getResponsivePosition(430, 930).x,
+              top: getResponsivePosition(430, 930).y
             }}
           >
             →

@@ -33,11 +33,10 @@
 
 .nokia-screen {
   position: absolute;
-  /* Position based on 540x1250 image dimensions */
-  top: 27.4%; /* 280px / 1250px = 22.4% */
-  left: 16%; /* 70px / 540px = 13% */
-  width: 69.3%; /* 320px / 540px = 59.3% */
-  height: 21%; /* 225px / 1250px = 18% */
+  top: 27.4%;
+  left: 16%;
+  width: 69.3%;
+  height: 21%;
   background: #aee0a5;
   border: 2px solid #333;
   border-radius: 5px;
@@ -174,13 +173,13 @@
 .control-button:hover {
   background: rgba(255, 0, 0, 0.5);
   color: white;
-  transform: scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .control-button:active {
   background: rgba(255, 0, 0, 0.7);
   color: white;
-  transform: scale(0.95);
+  transform: translate(-50%, -50%) scale(0.95);
 }
 
 .close-button {

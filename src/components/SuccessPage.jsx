@@ -10,7 +10,7 @@ const SuccessPage = () => {
         <h1>Access granted!</h1>
         <p>You are human.</p>
         <p className="success-message">
-          Congratulations! You've successfully completed the Nokia 3310 Snake CAPTCHA.
+          Congratulations! You've successfully completed the Nokia 3310 Snake CAPTCHA and convinced Shrek to let you in.
           Your human status has been verified.
         </p>
         <Link to="/" className="back-button">
