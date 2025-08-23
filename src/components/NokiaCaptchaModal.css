@@ -147,39 +147,105 @@
   background: #555;
 }
 
-/* Control buttons - Made visible for testing */
+/* Control buttons - Invisible but functional */
 .control-button {
   position: absolute;
   width: 50px;
   height: 50px;
-  background: rgba(255, 0, 0, 0.3); /* Red background for testing */
-  border: 2px solid red;
+  background: transparent !important; /* Completely transparent background */
+  border: none !important; /* No border at all */
   border-radius: 50%;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-  color: red;
+  font-size: 0; /* Hide the arrow text */
+  color: transparent; /* Transparent text */
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: none; /* Remove transitions to prevent any visual changes */
   min-height: 50px;
   min-width: 50px;
   z-index: 100;
   transform: translate(-50%, -50%);
+  outline: none !important; /* Remove focus outline */
+  box-shadow: none !important; /* Remove any box shadows */
   /* Remove fixed positioning - will be set dynamically in JSX */
 }
 
 .control-button:hover {
-  background: rgba(255, 0, 0, 0.5);
-  color: white;
-  transform: translate(-50%, -50%) scale(1.1);
+  background: transparent !important; /* Keep transparent on hover */
+  color: transparent !important; /* Keep text transparent */
+  transform: translate(-50%, -50%); /* No scale effect */
+  border: none !important; /* No border on hover */
+  outline: none !important; /* No outline on hover */
+  box-shadow: none !important; /* No shadow on hover */
 }
 
 .control-button:active {
-  background: rgba(255, 0, 0, 0.7);
-  color: white;
-  transform: translate(-50%, -50%) scale(0.95);
+  background: transparent !important; /* Keep transparent when clicked */
+  color: transparent !important; /* Keep text transparent */
+  transform: translate(-50%, -50%); /* No scale effect */
+  border: none !important; /* No border when active */
+  outline: none !important; /* No outline when active */
+  box-shadow: none !important; /* No shadow when active */
+}
+
+.control-button:focus {
+  background: transparent !important; /* Keep transparent when focused */
+  color: transparent !important; /* Keep text transparent */
+  border: none !important; /* No border when focused */
+  outline: none !important; /* No outline when focused */
+  box-shadow: none !important; /* No shadow when focused */
+}
+
+/* Override any browser default button styles */
+.control-button::-moz-focus-inner {
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+.control-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure no background color in any state */
+.control-button,
+.control-button:hover,
+.control-button:active,
+.control-button:focus,
+.control-button:visited {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Additional overrides for any remaining visual elements */
+.control-button::before,
+.control-button::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Override any potential inherited styles */
+.control-button * {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Override any global button styles */
+button.control-button {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
 }
 
 .close-button {

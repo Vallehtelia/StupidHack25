@@ -33,7 +33,7 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
   
   // Calculate responsive positions based on phone image dimensions
   const getResponsivePosition = (originalX, originalY) => {
-    if (phoneDimensions.width === 0 || phoneDimensions.height === 0) return { x: 0, y: 0 };
+    if (phoneDimensions.width === 0 || phoneDimensions.height === 0) return null;
     
     // Convert from 540x1250 to current phone dimensions
     const scaleX = phoneDimensions.width / 540;
@@ -50,12 +50,19 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     const handleImageLoad = () => {
       if (phoneImageRef.current) {
         const rect = phoneImageRef.current.getBoundingClientRect();
-        setPhoneDimensions({ width: rect.width, height: rect.height });
+        if (rect.width > 0 && rect.height > 0) {
+          setPhoneDimensions({ width: rect.width, height: rect.height });
+        }
       }
     };
     
+    // Handle both natural load and current state
     if (phoneImageRef.current) {
-      handleImageLoad();
+      if (phoneImageRef.current.complete) {
+        handleImageLoad();
+      } else {
+        phoneImageRef.current.addEventListener('load', handleImageLoad);
+      }
     }
     
     // Also handle window resize
@@ -64,7 +71,12 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
     };
     
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (phoneImageRef.current) {
+        phoneImageRef.current.removeEventListener('load', handleImageLoad);
+      }
+    };
   }, []);
   
   // Keep refs in sync with state
@@ -436,50 +448,46 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
           </div>
           
           {/* Control buttons positioned exactly over the PNG buttons */}
-          <button 
-            className="control-button up"
-            onClick={() => handleDirectionChange({ x: 0, y: -1 })}
-            aria-label="Move Up"
-            style={{
-              left: getResponsivePosition(270, 860).x,
-              top: getResponsivePosition(270, 860).y
-            }}
-          >
-            ↑
-          </button>
-          <button 
-            className="control-button down"
-            onClick={() => handleDirectionChange({ x: 0, y: 1 })}
-            aria-label="Move Down"
-            style={{
-              left: getResponsivePosition(270, 1040).x,
-              top: getResponsivePosition(270, 1040).y
-            }}
-          >
-            ↓
-          </button>
-          <button 
-            className="control-button left"
-            onClick={() => handleDirectionChange({ x: -1, y: 0 })}
-            aria-label="Move Left"
-            style={{
-              left: getResponsivePosition(120, 930).x,
-              top: getResponsivePosition(120, 930).y
-            }}
-          >
-            ←
-          </button>
-          <button 
-            className="control-button right"
-            onClick={() => handleDirectionChange({ x: 1, y: 0 })}
-            aria-label="Move Right"
-            style={{
-              left: getResponsivePosition(430, 930).x,
-              top: getResponsivePosition(430, 930).y
-            }}
-          >
-            →
-          </button>
+          {phoneDimensions.width > 0 && phoneDimensions.height > 0 && (
+            <>
+              <button 
+                className="control-button up"
+                onClick={() => handleDirectionChange({ x: 0, y: -1 })}
+                aria-label="Move Up"
+                style={{
+                  left: getResponsivePosition(270, 860).x,
+                  top: getResponsivePosition(270, 860).y
+                }}
+              />
+              <button 
+                className="control-button down"
+                onClick={() => handleDirectionChange({ x: 0, y: 1 })}
+                aria-label="Move Down"
+                style={{
+                  left: getResponsivePosition(270, 1040).x,
+                  top: getResponsivePosition(270, 1040).y
+                }}
+              />
+              <button 
+                className="control-button left"
+                onClick={() => handleDirectionChange({ x: -1, y: 0 })}
+                aria-label="Move Left"
+                style={{
+                  left: getResponsivePosition(120, 930).x,
+                  top: getResponsivePosition(120, 930).y
+                }}
+              />
+              <button 
+                className="control-button right"
+                onClick={() => handleDirectionChange({ x: 1, y: 0 })}
+                aria-label="Move Right"
+                style={{
+                  left: getResponsivePosition(430, 930).x,
+                  top: getResponsivePosition(430, 930).y
+                }}
+              />
+            </>
+          )}
           
           {/* Close button */}
           <button 

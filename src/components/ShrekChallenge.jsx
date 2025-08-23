@@ -70,7 +70,7 @@ const ShrekChallenge = ({ onSuccess, completedChallenges, totalChallenges }) => 
           setChallengeComplete(true);
           setTimeout(() => {
             onSuccess();
-          }, 2000); // Give user time to read the final message
+          }, 4000); // Give user time to read the final message
         }
       } else {
         // Handle error
