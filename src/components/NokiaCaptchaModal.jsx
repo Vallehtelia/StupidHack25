@@ -447,6 +447,27 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
             )}
           </div>
           
+          {/* Instructions panel - positioned outside phone on right side */}
+          <div className="instructions-panel">
+            <div className="instructions-header">CONTROLS</div>
+            <div className="instruction-row">
+              <span className="key">2</span>
+              <span className="action">UP</span>
+            </div>
+            <div className="instruction-row">
+              <span className="key">8</span>
+              <span className="action">DOWN</span>
+            </div>
+            <div className="instruction-row">
+              <span className="key">4</span>
+              <span className="action">LEFT</span>
+            </div>
+            <div className="instruction-row">
+              <span className="key">6</span>
+              <span className="action">RIGHT</span>
+            </div>
+          </div>
+          
           {/* Control buttons positioned exactly over the PNG buttons */}
           {phoneDimensions.width > 0 && phoneDimensions.height > 0 && (
             <>

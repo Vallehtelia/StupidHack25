@@ -248,6 +248,65 @@ button.control-button {
   color: transparent !important;
 }
 
+/* Instructions Panel - positioned on right side of window */
+.instructions-panel {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  width: 200px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Courier New', monospace;
+  z-index: 1000;
+}
+
+.instructions-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.instruction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.instruction-row:last-child {
+  margin-bottom: 0;
+}
+
+.key {
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  min-width: 25px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.action {
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
 .close-button {
   position: absolute;
   top: 5%;
