@@ -23,7 +23,7 @@ const NokiaCaptchaModal = ({ onSuccess, onFailure }) => {
   
   const GRID_SIZE = 8;
   const GAME_SPEED = 200;
-  const TARGET_SCORE = 2;
+  const TARGET_SCORE = 10;
   
   // Game state
   const [snake, setSnake] = useState([{ x: 2, y: 2 }]);
