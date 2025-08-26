@@ -8,6 +8,16 @@ A humorous React web app featuring a classic Nokia 3310 Snake game CAPTCHA follo
 
 ▶️ [Watch the full demo on YouTube](https://www.youtube.com/watch?v=g0KP4qt_UY4)
 
+## Prerequisites
+
+### Required Software
+- **Node.js** (v18 or higher)
+- **Python 3** (v3.8 or higher)
+- **npm** (comes with Node.js)
+
+### Required Accounts
+- **OpenAI API Key**: Get one from [OpenAI Platform](https://platform.openai.com/api-keys)
+
 ## 🚀 Quick Start
 
 ```bash
@@ -77,16 +87,6 @@ npm run dev:full
 - **Backend**: Express.js server with Python integration
 - **AI Integration**: OpenAI GPT-5-nano API via Python script
 - **Memory System**: Session-based conversation history for Shrek AI
-
-## Prerequisites
-
-### Required Software
-- **Node.js** (v18 or higher)
-- **Python 3** (v3.8 or higher)
-- **npm** (comes with Node.js)
-
-### Required Accounts
-- **OpenAI API Key**: Get one from [OpenAI Platform](https://platform.openai.com/api-keys)
 
 ## Installation & Setup
 
