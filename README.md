@@ -2,6 +2,12 @@
 
 A humorous React web app featuring a classic Nokia 3310 Snake game CAPTCHA followed by an AI-powered challenge where you must convince Shrek to let you into his swamp.
 
+## 🎥 Demo
+
+![Gameplay Screenshot](./docs/Shrek.jpg)
+
+▶️ [Watch the full demo on YouTube](https://www.youtube.com/watch?v=g0KP4qt_UY4)
+
 ## 🚀 Quick Start
 
 ```bash
